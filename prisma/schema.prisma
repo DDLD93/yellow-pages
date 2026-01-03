@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Business {
+  id                        String   @id @default(cuid())
+  businessName              String
+  businessRegCatType        String
+  businessLGA               String
+  businessWard              String?
+  businessAddress           String?
+  ownerAtBusinessPhotoUrl   String?
+  status                    String   // Eligible, Disbursed, Pending, Rejected
+  phone                     String?
+  email                     String?
+  website                   String?
+  latitude                  Float?
+  longitude                 Float?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+  
+  // Sensitive fields (will be filtered out in server actions)
+  bvn                       String?
+  dob                       DateTime?
+  bankAccountNumber         String?
+  bankName                  String?
+  ownerPersonalPhoto        String?
+
+  @@index([status])
+  @@index([businessLGA])
+  @@index([businessRegCatType])
+  @@index([businessName])
+  @@map("businesses")
+}

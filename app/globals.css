@@ -2,23 +2,21 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1e293b; /* Slate-800 for softer black */
   
   /* Kaduna State Brand Colors */
-  --kaduna-green: #006837;
-  --kaduna-gold: #FDB913;
-  --kaduna-light-green: #e6f4ea;
-  --kaduna-light-gold: #fff8e1;
+  --kaduna-navy: #0A2463;
+  --kaduna-emerald: #0D7B5D;
+  --kaduna-gold: #D4A017;
   --kaduna-surface: #F8FAFB;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-kaduna-green: var(--kaduna-green);
+  --color-kaduna-navy: var(--kaduna-navy);
+  --color-kaduna-emerald: var(--kaduna-emerald);
   --color-kaduna-gold: var(--kaduna-gold);
-  --color-kaduna-light-green: var(--kaduna-light-green);
-  --color-kaduna-light-gold: var(--kaduna-light-gold);
   --color-kaduna-surface: var(--kaduna-surface);
   --font-sans: var(--font-inter);
 }
@@ -27,7 +25,27 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
-  overflow: hidden; /* Prevent body scroll for single viewport app */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 /* Line clamp utility */
@@ -36,22 +54,4 @@ body {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-/* Custom Scrollbar for internal scrolling areas */
-@layer utilities {
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: #cbd5e1;
-    border-radius: 20px;
-  }
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background-color: #94a3b8;
-  }
 }
