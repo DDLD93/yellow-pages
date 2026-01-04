@@ -1,13 +1,25 @@
+import { Metadata } from 'next';
 import { getLGAs } from '@/actions/get-lgas';
 import { getCategories } from '@/actions/get-categories';
 import RegisterForm from '@/components/register-form';
 import Link from 'next/link';
 import Logo from '@/components/logo';
+import { generateMetadata as generateBaseMetadata } from '@/lib/metadata';
 
-export const metadata = {
-  title: 'Register Business - Kaduna Business Connect',
-  description: 'Register your business in the official Kaduna State directory.',
-};
+export const metadata: Metadata = generateBaseMetadata({
+  title: 'Register Business',
+  description: 'Register your business in the official Kaduna State directory. Join thousands of verified businesses and get discovered by customers across Kaduna State, Nigeria.',
+  keywords: [
+    'register business',
+    'business registration',
+    'Kaduna State',
+    'Nigeria',
+    'business directory',
+    'add business',
+    'list business',
+  ],
+  url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/register`,
+});
 
 export default async function RegisterPage() {
   const [lgas, categories] = await Promise.all([
