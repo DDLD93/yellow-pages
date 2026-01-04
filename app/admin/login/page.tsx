@@ -3,7 +3,7 @@
 import { useActionState } from 'react';
 import { login } from '@/actions/admin-auth';
 import { AdminInput, AdminButton, AdminCard } from '@/components/admin/ui';
-import { Lock } from 'lucide-react';
+import Logo from '@/components/logo';
 
 export default function AdminLogin() {
   const [state, action, isPending] = useActionState(login, undefined);
@@ -13,10 +13,10 @@ export default function AdminLogin() {
       <div className="w-full max-w-md animate-admin-scale-in">
         <AdminCard padding="lg">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-kaduna-navy/10 mb-4">
-              <Lock className="w-8 h-8 text-kaduna-navy" />
+            <div className="flex justify-center mb-4">
+              <Logo variant="default" orientation="vertical" />
             </div>
-            <h1 className="text-2xl font-bold text-admin-text-primary">Admin Login</h1>
+            <h1 className="text-2xl font-bold text-admin-text-primary mt-4">Admin Login</h1>
             <p className="text-admin-text-secondary text-sm mt-2">Kaduna Business Connect Dashboard</p>
           </div>
 
