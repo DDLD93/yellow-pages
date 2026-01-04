@@ -179,12 +179,13 @@ export function AdminInput({
 }
 
 // AdminSelect Component
-interface AdminSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+interface AdminSelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'placeholder'> {
   label?: string;
   error?: string;
   helperText?: string;
   options: Array<{ value: string; label: string }>;
   fullWidth?: boolean;
+  placeholder?: string;
 }
 
 export function AdminSelect({
@@ -194,6 +195,7 @@ export function AdminSelect({
   options,
   fullWidth = true,
   className,
+  placeholder,
   ...props
 }: AdminSelectProps) {
   return (
@@ -219,9 +221,9 @@ export function AdminSelect({
         )}
         {...props}
       >
-        {props.placeholder && (
+        {placeholder && (
           <option value="" disabled>
-            {props.placeholder}
+            {placeholder}
           </option>
         )}
         {options.map((option) => (

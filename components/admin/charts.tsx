@@ -29,6 +29,7 @@ const cartesianGridStyle = {
 interface ChartData {
   name: string;
   value: number;
+  [key: string]: any;
 }
 
 interface BusinessStatusChartProps {
@@ -78,7 +79,7 @@ export function CategoryChart({ data }: CategoryChartProps) {
           cx="50%"
           cy="50%"
           outerRadius={100}
-          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+          label={({ name, percent }) => `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`}
           labelLine={false}
         >
           {data.slice(0, 5).map((entry, index) => (

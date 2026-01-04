@@ -10,9 +10,9 @@ export function AdminHeader() {
   const pathname = usePathname();
   
   // Generate breadcrumbs from pathname
-  const generateBreadcrumbs = () => {
+  const generateBreadcrumbs = (): Array<{ label: string; href?: string }> => {
     const parts = pathname.split('/').filter(Boolean);
-    const breadcrumbs = [{ label: 'Admin', href: '/admin' }];
+    const breadcrumbs: Array<{ label: string; href?: string }> = [{ label: 'Admin', href: '/admin' }];
     
     let currentPath = '/admin';
     parts.forEach((part, index) => {
