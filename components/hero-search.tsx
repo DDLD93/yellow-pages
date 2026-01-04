@@ -1,7 +1,9 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
+import LoadingSpinner from './loading-spinner';
+import { triggerNavigationStart } from './navigation-progress';
 
 interface HeroSearchProps {
   variant?: 'centered' | 'header';
@@ -13,6 +15,7 @@ export default function HeroSearch({ variant = 'centered', className = '' }: Her
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const [isFocused, setIsFocused] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     setSearchQuery(searchParams.get('q') || '');
@@ -27,7 +30,13 @@ export default function HeroSearch({ variant = 'centered', className = '' }: Her
     } else {
       params.delete('q');
     }
-    router.push(`/?${params.toString()}`);
+    
+    // Trigger navigation progress bar
+    triggerNavigationStart();
+    
+    startTransition(() => {
+      router.push(`/?${params.toString()}`);
+    });
   };
 
   const isHeader = variant === 'header';
@@ -45,13 +54,18 @@ export default function HeroSearch({ variant = 'centered', className = '' }: Her
             ? 'shadow-sm border border-slate-200 hover:shadow-md' 
             : `shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-transparent ${isFocused ? 'ring-2 ring-kaduna-gold/20' : ''}`
           }
+          ${isPending ? 'opacity-90' : ''}
         `}
       >
         {/* Search Icon */}
         <div className={`pl-4 text-slate-400 ${isHeader ? 'pl-3' : 'pl-5'}`}>
-          <svg className={`transition-colors ${isFocused ? 'text-kaduna-gold' : ''} ${isHeader ? 'w-4 h-4' : 'w-5 h-5'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+          {isPending ? (
+            <LoadingSpinner size={isHeader ? 'sm' : 'md'} color="primary" />
+          ) : (
+            <svg className={`transition-colors ${isFocused ? 'text-kaduna-gold' : ''} ${isHeader ? 'w-4 h-4' : 'w-5 h-5'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          )}
         </div>
 
         <input
@@ -61,7 +75,8 @@ export default function HeroSearch({ variant = 'centered', className = '' }: Her
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder={isHeader ? "Search businesses..." : "What are you looking for today?"}
-          className={`w-full bg-transparent focus:outline-none placeholder:text-slate-400 font-medium text-slate-700
+          disabled={isPending}
+          className={`w-full bg-transparent focus:outline-none placeholder:text-slate-400 font-medium text-slate-700 disabled:opacity-60
             ${isHeader 
               ? 'h-10 px-3 text-sm' 
               : 'h-14 px-4 text-lg'
@@ -70,31 +85,46 @@ export default function HeroSearch({ variant = 'centered', className = '' }: Her
 
         {/* Action Button */}
         <div className="pr-1.5">
-            <button
+          <button
             type="submit"
-            className={`flex items-center justify-center transition-all duration-200 text-white rounded-full
-                ${isHeader
+            disabled={isPending}
+            className={`flex items-center justify-center transition-all duration-200 text-white rounded-full disabled:opacity-70
+              ${isHeader
                 ? 'h-7 w-7 bg-kaduna-navy hover:bg-kaduna-emerald'
                 : 'h-11 w-11 bg-kaduna-emerald hover:bg-kaduna-navy shadow-md hover:shadow-lg hover:scale-105 active:scale-95'
-                }`}
-            aria-label="Search"
-            >
-            <svg
+              }
+              ${isPending ? 'cursor-wait' : ''}
+            `}
+            aria-label={isPending ? "Searching..." : "Search"}
+          >
+            {isPending ? (
+              <LoadingSpinner size={isHeader ? 'xs' : 'sm'} color="white" />
+            ) : (
+              <svg
                 className={isHeader ? "h-3.5 w-3.5" : "h-5 w-5"}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-            >
+              >
                 <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
                 />
-            </svg>
-            </button>
+              </svg>
+            )}
+          </button>
         </div>
       </div>
+
+      {/* Loading overlay text for centered variant */}
+      {isPending && !isHeader && (
+        <div className="absolute -bottom-8 left-0 right-0 flex items-center justify-center gap-2 text-sm text-slate-500 animate-pulse">
+          <LoadingSpinner size="xs" variant="dots" color="primary" />
+          <span>Searching...</span>
+        </div>
+      )}
     </form>
   );
 }

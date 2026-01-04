@@ -6,18 +6,104 @@
   
   /* Kaduna State Brand Colors */
   --kaduna-navy: #0A2463;
+  --kaduna-navy-light: #1a3a7a;
   --kaduna-emerald: #0D7B5D;
+  --kaduna-emerald-light: #10a37f;
   --kaduna-gold: #D4A017;
+  --kaduna-gold-light: #e8b82a;
   --kaduna-surface: #F8FAFB;
+  
+  /* Admin Design System - Surfaces */
+  --admin-bg: #f8fafc;
+  --admin-surface: #ffffff;
+  --admin-surface-elevated: #ffffff;
+  --admin-surface-hover: #f1f5f9;
+  
+  /* Admin Design System - Borders */
+  --admin-border: #e2e8f0;
+  --admin-border-hover: #cbd5e1;
+  --admin-border-focus: var(--kaduna-navy);
+  
+  /* Admin Design System - Text */
+  --admin-text-primary: #0f172a;
+  --admin-text-secondary: #475569;
+  --admin-text-muted: #94a3b8;
+  --admin-text-inverse: #ffffff;
+  
+  /* Admin Design System - Status Colors */
+  --admin-success: #10b981;
+  --admin-success-light: #d1fae5;
+  --admin-success-dark: #047857;
+  --admin-warning: #f59e0b;
+  --admin-warning-light: #fef3c7;
+  --admin-warning-dark: #b45309;
+  --admin-error: #ef4444;
+  --admin-error-light: #fee2e2;
+  --admin-error-dark: #b91c1c;
+  --admin-info: #3b82f6;
+  --admin-info-light: #dbeafe;
+  --admin-info-dark: #1d4ed8;
+  
+  /* Admin Design System - Shadows */
+  --admin-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --admin-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --admin-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --admin-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Admin Design System - Spacing */
+  --admin-radius-sm: 0.375rem;
+  --admin-radius: 0.5rem;
+  --admin-radius-md: 0.75rem;
+  --admin-radius-lg: 1rem;
+  
+  /* Admin Design System - Transitions */
+  --admin-transition-fast: 150ms ease;
+  --admin-transition: 200ms ease;
+  --admin-transition-slow: 300ms ease;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-kaduna-navy: var(--kaduna-navy);
+  --color-kaduna-navy-light: var(--kaduna-navy-light);
   --color-kaduna-emerald: var(--kaduna-emerald);
+  --color-kaduna-emerald-light: var(--kaduna-emerald-light);
   --color-kaduna-gold: var(--kaduna-gold);
+  --color-kaduna-gold-light: var(--kaduna-gold-light);
   --color-kaduna-surface: var(--kaduna-surface);
+  
+  /* Admin Colors */
+  --color-admin-bg: var(--admin-bg);
+  --color-admin-surface: var(--admin-surface);
+  --color-admin-surface-elevated: var(--admin-surface-elevated);
+  --color-admin-surface-hover: var(--admin-surface-hover);
+  --color-admin-border: var(--admin-border);
+  --color-admin-border-hover: var(--admin-border-hover);
+  --color-admin-text-primary: var(--admin-text-primary);
+  --color-admin-text-secondary: var(--admin-text-secondary);
+  --color-admin-text-muted: var(--admin-text-muted);
+  --color-admin-success: var(--admin-success);
+  --color-admin-success-light: var(--admin-success-light);
+  --color-admin-warning: var(--admin-warning);
+  --color-admin-warning-light: var(--admin-warning-light);
+  --color-admin-error: var(--admin-error);
+  --color-admin-error-light: var(--admin-error-light);
+  --color-admin-info: var(--admin-info);
+  --color-admin-info-light: var(--admin-info-light);
+  
+  /* Admin Shadows */
+  --shadow-admin-sm: var(--admin-shadow-sm);
+  --shadow-admin: var(--admin-shadow);
+  --shadow-admin-md: var(--admin-shadow-md);
+  --shadow-admin-lg: var(--admin-shadow-lg);
+  
+  /* Admin Radius */
+  --radius-admin-sm: var(--admin-radius-sm);
+  --radius-admin: var(--admin-radius);
+  --radius-admin-md: var(--admin-radius-md);
+  --radius-admin-lg: var(--admin-radius-lg);
+  
   --font-sans: var(--font-inter);
 }
 
@@ -49,9 +135,133 @@ body {
 }
 
 /* Line clamp utility */
-@utility line-clamp-2 {
+.line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Leaflet Map Overrides */
+.leaflet-container {
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  border-radius: 0.75rem;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px;
+}
+
+.leaflet-popup-tip {
+  box-shadow: none;
+}
+
+.leaflet-control-zoom {
+  border: none !important;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
+}
+
+.leaflet-control-zoom a {
+  border: none !important;
+  color: #475569 !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #f1f5f9 !important;
+  color: #0D7B5D !important;
+}
+
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Admin Panel Animations */
+@keyframes admin-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes admin-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes admin-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes admin-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Admin Animation Utilities */
+.animate-admin-fade-in {
+  animation: admin-fade-in 0.3s ease-out forwards;
+}
+
+.animate-admin-slide-in {
+  animation: admin-slide-in-left 0.3s ease-out forwards;
+}
+
+.animate-admin-scale-in {
+  animation: admin-scale-in 0.2s ease-out forwards;
+}
+
+/* Admin Skeleton Loading */
+.admin-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--admin-surface-hover) 25%,
+    var(--admin-border) 50%,
+    var(--admin-surface-hover) 75%
+  );
+  background-size: 200% 100%;
+  animation: admin-shimmer 1.5s infinite;
+}
+
+/* Admin Focus Ring */
+.admin-focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--admin-surface), 0 0 0 4px var(--kaduna-navy);
+}
+
+/* Admin Card Hover Effect */
+.admin-card-hover {
+  transition: all var(--admin-transition);
+}
+
+.admin-card-hover:hover {
+  box-shadow: var(--admin-shadow-md);
+  border-color: var(--admin-border-hover);
 }

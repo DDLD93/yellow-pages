@@ -3,6 +3,7 @@
 import { db } from '@/lib/db';
 import { transformBusiness } from './transform-business';
 import { BusinessFilters, PublicBusinessProfile } from '@/types/public-business';
+import { logSearch } from './log-search';
 
 export async function getBusinesses(filters: BusinessFilters = {}): Promise<{
   businesses: PublicBusinessProfile[];
@@ -100,6 +101,17 @@ export async function getBusinesses(filters: BusinessFilters = {}): Promise<{
   const transformedBusinesses = businesses.map(transformBusiness);
 
   const totalPages = Math.ceil(total / limit);
+
+  // Log search asynchronously (don't await to avoid blocking)
+  if (query || lga || (category && category.length > 0)) {
+    logSearch({
+      query,
+      lga,
+      category: Array.isArray(category) ? category.join(',') : category,
+      verified,
+      resultsCount: total,
+    });
+  }
 
   return {
     businesses: transformedBusinesses,

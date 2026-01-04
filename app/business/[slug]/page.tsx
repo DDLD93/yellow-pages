@@ -27,14 +27,6 @@ export async function generateMetadata({ params }: BusinessPageProps): Promise<M
     openGraph: {
       title: `${business.name} in ${business.location.lga}`,
       description: `Contact ${business.name} for ${business.category} services in Kaduna State.`,
-      images: [
-        {
-          url: business.media.heroImage,
-          width: 1200,
-          height: 630,
-          alt: business.name,
-        },
-      ],
     },
   };
 }

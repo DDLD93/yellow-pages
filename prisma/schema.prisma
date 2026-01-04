@@ -36,3 +36,39 @@ model Business {
   @@index([businessName])
   @@map("businesses")
 }
+
+model BusinessRegistration {
+  id                  String   @id @default(cuid())
+  businessName        String
+  businessRegCatType  String
+  businessLGA         String
+  businessWard        String?
+  businessAddress     String?
+  ownerFirstName      String?
+  ownerSurname        String?
+  phone               String
+  email               String?
+  status              String   @default("Pending") // Pending, Reviewed, Approved, Rejected
+  
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([status])
+  @@map("business_registrations")
+}
+
+model SearchLog {
+  id          String   @id @default(cuid())
+  query       String?
+  lga         String?
+  category    String?
+  verified    Boolean?
+  resultsCount Int
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  
+  @@index([createdAt])
+  @@index([query])
+  @@map("search_logs")
+}

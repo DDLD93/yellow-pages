@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { getBusinesses } from '@/actions/get-businesses';
 import { getLGAs } from '@/actions/get-lgas';
 import { getCategories } from '@/actions/get-categories';
+import { getStats } from '@/actions/get-stats';
 import SearchFilters from '@/components/search-filters';
 import BusinessGrid from '@/components/business-grid';
 import BusinessGridSkeleton from '@/components/business-grid-skeleton';
@@ -64,10 +65,11 @@ export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const hasSearch = !!(params.q || params.lga || params.category || params.verified);
 
-  // Fetch filter options
-  const [lgas, categories] = await Promise.all([
+  // Fetch filter options and stats in parallel
+  const [lgas, categories, stats] = await Promise.all([
     getLGAs(),
     getCategories(),
+    getStats(),
   ]);
 
   // Home State (Centered)
@@ -78,7 +80,7 @@ export default async function Home({ searchParams }: HomeProps) {
         <div className="absolute top-6 right-6 flex items-center gap-4 md:gap-6 text-sm font-medium z-20">
             <a href="https://kdsg.gov.ng" target="_blank" rel="noopener noreferrer" className="hidden md:block text-slate-600 hover:text-kaduna-emerald transition-colors">Government</a>
             <Link href="#" className="hidden md:block text-slate-600 hover:text-kaduna-emerald transition-colors">Business Portal</Link>
-            <Link href="#" className="px-3 py-1.5 md:px-4 md:py-2 bg-kaduna-emerald text-white text-xs md:text-sm rounded-full hover:bg-kaduna-navy transition-colors shadow-sm whitespace-nowrap">
+            <Link href="/register" className="px-3 py-1.5 md:px-4 md:py-2 bg-kaduna-emerald text-white text-xs md:text-sm rounded-full hover:bg-kaduna-navy transition-colors shadow-sm whitespace-nowrap">
                 Register Business
             </Link>
         </div>
@@ -90,9 +92,14 @@ export default async function Home({ searchParams }: HomeProps) {
           <div className="w-full space-y-6 flex flex-col items-center">
             <HeroSearch variant="centered" />
             
+            {/* Helper Stats Text */}
+            <div className="text-center text-xs md:text-sm text-slate-400 font-medium animate-in fade-in slide-in-from-bottom-2 duration-700 delay-150">
+                Searching across <span className="font-semibold text-slate-600">{stats.businessCount.toLocaleString()}</span> businesses in <span className="font-semibold text-slate-600">{stats.lgaCount}</span> LGAs
+            </div>
+            
             {/* Quick Filter Suggestions */}
             <div className="flex flex-wrap justify-center gap-2 max-w-xl">
-              <span className="text-sm text-slate-400 font-medium mr-2 self-center hidden sm:inline">Popular:</span>
+              <span className="text-xs md:text-sm text-slate-400 font-medium mr-2 self-center hidden sm:inline">Popular:</span>
               {categories.slice(0, 5).map((cat) => (
                 <Link
                   key={cat}
@@ -136,9 +143,6 @@ export default async function Home({ searchParams }: HomeProps) {
                 <Link href="/" className="shrink-0 flex items-center group opacity-90 hover:opacity-100 transition-opacity">
                     <Logo variant="default" orientation="horizontal" />
                 </Link>
-                
-                {/* Mobile: Filter Toggle is inside SearchFilters, but we might want actions here? 
-                    For now, keep it simple. */}
             </div>
 
             {/* Search Area */}
@@ -154,7 +158,7 @@ export default async function Home({ searchParams }: HomeProps) {
             {/* Header Actions (Desktop) */}
             <div className="hidden xl:flex items-center gap-4 ml-auto">
                 <Link href="#" className="text-sm font-medium text-slate-600 hover:text-kaduna-emerald">Business Portal</Link>
-                <Link href="#" className="px-4 py-2 text-sm font-medium bg-kaduna-navy text-white rounded-full hover:bg-kaduna-emerald transition-colors shadow-sm">
+                <Link href="/register" className="px-4 py-2 text-sm font-medium bg-kaduna-navy text-white rounded-full hover:bg-kaduna-emerald transition-colors shadow-sm">
                     Register
                 </Link>
             </div>

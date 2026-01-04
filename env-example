@@ -1,0 +1,4 @@
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your_secure_password_here
+ADMIN_SESSION_SECRET=random_32_char_secret
+
